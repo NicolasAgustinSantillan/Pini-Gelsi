@@ -19,6 +19,12 @@
                                           <input id="txtIdProveedor" type="hidden" value="0" />
                                           <div class="col-sm-4">
                                             <div class="form-group mb-0">
+                                                <label for="btnBuscarProveedor" class="col-form-label col-form-label-sm invisible">Buscar:</label>
+                                                <button id="btnBuscarProveedor" type="button" class="btn btn-sm btn-secondary btn-block">Buscar</button>
+                                            </div>
+                                          </div>
+                                          <div class="col-sm-4">
+                                            <div class="form-group mb-0">
                                               <label for="txtRucProveedor" class="col-form-label col-form-label-sm">RUC:</label>
                                               <input type="text" class="form-control form-control-sm model" readonly id="txtRucProveedor" name="RUC">
                                             </div>
@@ -27,12 +33,6 @@
                                             <div class="form-group mb-0">
                                               <label for="txtRazonSocialProveedor" class="col-form-label col-form-label-sm">Razon Social:</label>
                                               <input type="text" class="form-control form-control-sm model" readonly id="txtRazonSocialProveedor" name="RazonSocial">
-                                            </div>
-                                          </div>
-                                          <div class="col-sm-4">
-                                            <div class="form-group mb-0">
-                                                <label for="btnBuscarProveedor" class="col-form-label col-form-label-sm invisible">Buscar:</label>
-                                                <button id="btnBuscarProveedor" type="button" class="btn btn-sm btn-secondary btn-block">Buscar</button>
                                             </div>
                                           </div>
                                       </div>
@@ -59,8 +59,8 @@
                                           </div>
                                           <div class="col-sm-4">
                                             <div class="form-group mb-0">
-                                                <label for="btnBuscarTienda" class="col-form-label col-form-label-sm invisible">Buscar:</label>
-                                                <button id="btnBuscarTienda" type="button" class="btn btn-sm btn-secondary btn-block">Buscar</button>
+                                                <label for="btnBuscarTienda" class="col-form-label col-form-label-sm invisible" hidden>Buscar:</label>
+                                                <button id="btnBuscarTienda" type="button" class="btn btn-sm btn-secondary btn-block" hidden>Buscar</button>
                                             </div>
                                           </div>
                                       </div>
@@ -251,5 +251,5 @@
         </div>
       </div>
     </div>
-    <script src="Controlador/frmRegistrarCompra/frmRegistrarCompra.js"></script>
+    <script src="Controlador/frmRegistrarCompra/frmRegistraCompra.js"></script>
 </asp:Content>

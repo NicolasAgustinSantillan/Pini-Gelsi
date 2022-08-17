@@ -1,4 +1,9 @@
-﻿$("#txtCodigoProducto").on('keypress', function (e) {
+﻿//TIENDA
+$("#txtIdTienda").val("1");
+$("#txtRucTienda").val("25689789654");
+$("#txtNombreTienda").val("Tienda 93");
+
+$("#txtCodigoProducto").on('keypress', function (e) {
 
     
     if (e.which == 13) {
@@ -179,8 +184,9 @@ $('#tbProveedor tbody').on('click', 'button[class="btn btn-sm btn-primary ml-2"]
 
 $('#btnBuscarTienda').on('click', function () {
 
-    $('#modalTienda').modal('show');
-    cargarTiendas();
+    //alert('Hola');
+    //$('#modalTienda').modal('show');
+    //cargarTiendas();
 })
 
 $('#tbTienda tbody').on('click', 'button[class="btn btn-sm btn-primary ml-2"]', function () {
@@ -308,7 +314,8 @@ $('#btnTerminarGuardarCompra').on('click', function () {
     compra = "<COMPRA>" +
         "<IdUsuario>!idusuario¡</IdUsuario>" +
         "<IdProveedor>" + $("#txtIdProveedor").val() + "</IdProveedor>" +
-        "<IdTienda>" + $("#txtIdTienda").val() + "</IdTienda>" +
+        /*"<IdTienda>" + $("#txtIdTienda").val() + "</IdTienda>" +*/
+        "<IdTienda>" + 1 + "</IdTienda>" +
         "<TotalCosto>!totalcosto¡</TotalCosto>" +
         "</COMPRA>";
     detallecompra = "<DETALLE_COMPRA>"
@@ -348,9 +355,9 @@ $('#btnTerminarGuardarCompra').on('click', function () {
                 $("#txtRazonSocialProveedor").val("");
 
                 //TIENDA
-                $("#txtIdTienda").val("0");
-                $("#txtRucTienda").val("");
-                $("#txtNombreTienda").val("");
+                $("#txtIdTienda").val("1");
+                $("#txtRucTienda").val("25689789654");
+                $("#txtNombreTienda").val("Tienda 93");
 
                 //PRODUCTO
                 $("#txtIdProducto").val("0");
