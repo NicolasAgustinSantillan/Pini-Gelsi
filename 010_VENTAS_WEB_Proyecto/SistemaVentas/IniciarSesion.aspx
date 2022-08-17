@@ -33,7 +33,7 @@
             </div>
         </form>
         <div class="social-media">
-            <p>Todos los derechos reservados</p>
+            <p>Instituto 93</p>
         </div>
     </div>
     <script src="Controlador/IniciarSesion/IniciarSesion.js"></script>
