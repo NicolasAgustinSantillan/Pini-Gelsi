@@ -48,6 +48,8 @@
     <Compile Include="DetalleVenta.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Permisos.cs" />
+    <Compile Include="PlanCuenta.cs" />
+    <Compile Include="PlanCuentasRubros.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="ProductoTienda.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
