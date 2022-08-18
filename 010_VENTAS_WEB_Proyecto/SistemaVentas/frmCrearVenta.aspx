@@ -74,8 +74,8 @@
                                      <label class="input-group-text" for="inputGroupSelect01">Tipo Documento</label>
                                   </div>
                                   <select class="custom-select" id="cboventatipodocumento">
-                                    <option value="Boleta">Boleta</option>
-                                    <option value="Factura">Factura</option>
+                                    <option value="Boleta">Factura A</option>
+                                    <option value="Factura">Factura B</option>
                                   </select>
                                 </div>
                             </div>
@@ -184,15 +184,14 @@
                                             <div class="form-group mb-0">
                                               <label for="txtRazonSocialProveedor" class="col-form-label col-form-label-sm">Tipo Documento:</label>
                                               <select class="form-control form-control-sm model" id="cboclientetipodocumento" name="Rol">
-                                                  <option value="DNI">DNI</option>
-                                                  <option value="Carnet Extranjeria">Carnet Extranjeria</option>
-                                                  <option value="RUC">RUC</option>
+                                                  <option value="DNI">CUIT</option>
+                                                  <%--<option value="RUC">RUC</option>--%>
                                               </select>
                                             </div>
                                           </div>
                                           <div class="col-sm-4">
                                             <div class="form-group mb-0">
-                                              <label for="txtRazonSocialProveedor" class="col-form-label col-form-label-sm">Numero Documento: <span class="required">*</span> </label>
+                                              <label for="txtRazonSocialProveedor" class="col-form-label col-form-label-sm">Numero CUIT: <span class="required">*</span> </label>
                                               <input type="text" class="form-control form-control-sm model" id="txtclientedocumento" name="RazonSocial" autocomplete="off">
                                             </div>
                                           </div>
@@ -226,6 +225,12 @@
                                       <h6 class="card-title mb-1">Detalle Producto</h6>
                                       <div class="row">
                                           <input id="txtIdProducto" type="hidden" value="0" />
+                                          <div class="col-sm-2">
+                                              <div class="form-group mb-0">
+                                                  <label for="btnBuscarProducto" class="col-form-label col-form-label-sm invisible">Buscar:</label>
+                                                  <button id="btnBuscarProducto" type="button" class="btn btn-sm btn-secondary btn-block">Buscar</button>
+                                              </div>
+                                          </div>
                                           <div class="col-sm-3">
                                             <div class="form-group mb-0">
                                               <label for="txtproductocodigo" class="col-form-label col-form-label-sm">Codigo: <span class="required">*</span></label>
@@ -243,12 +248,6 @@
                                               <label for="txtproductodescripcion" class="col-form-label col-form-label-sm">Descripcion:</label>
                                               <input type="text" class="form-control form-control-sm model" readonly id="txtproductodescripcion" name="Descripcion">
                                             </div>
-                                          </div>
-                                          <div class="col-sm-2">
-                                              <div class="form-group mb-0">
-                                                  <label for="btnBuscarProducto" class="col-form-label col-form-label-sm invisible">Buscar:</label>
-                                                  <button id="btnBuscarProducto" type="button" class="btn btn-sm btn-secondary btn-block">Buscar</button>
-                                              </div>
                                           </div>
                                       </div>
                                       <div class="row">
@@ -400,5 +399,5 @@
     </div>
 
 
-    <script src="Controlador/frmCrearVenta/frmCrearVenta.js"></script>
+    <script src="Controlador/frmCrearVenta-/frmCrearVenta.js"></script>
 </asp:Content>

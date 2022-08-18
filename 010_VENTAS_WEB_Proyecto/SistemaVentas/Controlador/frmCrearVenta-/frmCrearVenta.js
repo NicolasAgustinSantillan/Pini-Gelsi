@@ -154,55 +154,63 @@ $('#btnAgregar').on('click', function () {
 
     $("#txtproductocantidad").val($("#txtproductocantidad").val() == "" ? "0" : $("#txtproductocantidad").val());
 
-    var existe_codigo = false;
-    if (
-        parseInt($("#txtIdProducto").val()) == 0 ||
-        parseFloat($("#txtproductocantidad").val()) == 0
-    ) {
-        swal("Mensaje", "Debe completar todos los campos del producto", "warning")
-        return;
-    }
+    var stockProducto = $('#txtproductostock').val();
 
-    $('#tbVenta > tbody  > tr').each(function (index, tr) {
-        var fila = tr;
-        var idproducto = $(fila).find("td.producto").data("idproducto");
+    var stockSolicitado = $('#txtproductocantidad').val();
 
-        if (idproducto == $("#txtIdProducto").val()) {
-            existe_codigo = true;
-            return false;
+    if (stockSolicitado < stockProducto + 1) {
+        var existe_codigo = false;
+        if (
+            parseInt($("#txtIdProducto").val()) == 0 ||
+            parseFloat($("#txtproductocantidad").val()) == 0
+        ) {
+            swal("Mensaje", "Debe completar todos los campos del producto", "warning")
+            return;
         }
 
-    });
+        $('#tbVenta > tbody  > tr').each(function (index, tr) {
+            var fila = tr;
+            var idproducto = $(fila).find("td.producto").data("idproducto");
 
-    if (!existe_codigo) {
+            if (idproducto == $("#txtIdProducto").val()) {
+                existe_codigo = true;
+                return false;
+            }
 
-        controlarStock(parseInt($("#txtIdProducto").val()), parseInt($("#txtIdTienda").val()), parseInt($("#txtproductocantidad").val()),true);
+        });
 
-        var importetotal = parseFloat($("#txtproductoprecio").val()) * parseFloat($("#txtproductocantidad").val());
-        $("<tr>").append(
-            $("<td>").append(
-                $("<button>").addClass("btn btn-danger btn-sm").text("Eliminar").data("idproducto", parseInt($("#txtIdProducto").val())).data("cantidadproducto", parseInt($("#txtproductocantidad").val()))
-            ),
-            $("<td>").addClass("productocantidad").text($("#txtproductocantidad").val()),
-            $("<td>").addClass("producto").data("idproducto", $("#txtIdProducto").val()).text($("#txtproductonombre").val()),
-            $("<td>").text($("#txtproductodescripcion").val()),
-            $("<td>").addClass("productoprecio").text($("#txtproductoprecio").val()),
-            $("<td>").addClass("importetotal").text(importetotal)
-        ).appendTo("#tbVenta tbody");
+        if (!existe_codigo) {
 
-        $("#txtIdProducto").val("0");
-        $("#txtproductocodigo").val("");
-        $("#txtproductonombre").val("");
-        $("#txtproductodescripcion").val("");
-        $("#txtproductostock").val("");
-        $("#txtproductoprecio").val("");
-        $("#txtproductocantidad").val("0");
+            controlarStock(parseInt($("#txtIdProducto").val()), parseInt($("#txtIdTienda").val()), parseInt($("#txtproductocantidad").val()), true);
 
-        $("#txtproductocodigo").focus();
+            var importetotal = parseFloat($("#txtproductoprecio").val()) * parseFloat($("#txtproductocantidad").val());
+            $("<tr>").append(
+                $("<td>").append(
+                    $("<button>").addClass("btn btn-danger btn-sm").text("Eliminar").data("idproducto", parseInt($("#txtIdProducto").val())).data("cantidadproducto", parseInt($("#txtproductocantidad").val()))
+                ),
+                $("<td>").addClass("productocantidad").text($("#txtproductocantidad").val()),
+                $("<td>").addClass("producto").data("idproducto", $("#txtIdProducto").val()).text($("#txtproductonombre").val()),
+                $("<td>").text($("#txtproductodescripcion").val()),
+                $("<td>").addClass("productoprecio").text($("#txtproductoprecio").val()),
+                $("<td>").addClass("importetotal").text(importetotal)
+            ).appendTo("#tbVenta tbody");
 
-        calcularPrecios();
+            $("#txtIdProducto").val("0");
+            $("#txtproductocodigo").val("");
+            $("#txtproductonombre").val("");
+            $("#txtproductodescripcion").val("");
+            $("#txtproductostock").val("");
+            $("#txtproductoprecio").val("");
+            $("#txtproductocantidad").val("0");
+
+            $("#txtproductocodigo").focus();
+
+            calcularPrecios();
+        } else {
+            swal("Mensaje", "El producto ya existe en la venta", "warning")
+        }
     } else {
-        swal("Mensaje", "El producto ya existe en la venta", "warning")
+        swal("Mensaje", "El stock no es suficiente", "warning")
     }
 })
 
