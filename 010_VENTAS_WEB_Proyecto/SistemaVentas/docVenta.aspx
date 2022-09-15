@@ -194,6 +194,6 @@
         function hide() {
             document.getElementById('Imprimir').style.visibility = "hidden";
         }
-    </script>
+   </script>
 </body>
 </html>

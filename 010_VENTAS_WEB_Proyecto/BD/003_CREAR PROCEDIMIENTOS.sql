@@ -216,6 +216,16 @@ DROP PROCEDURE usp_ObtenerListaPlanCuentaRubro
 
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'usp_ObtenerListaLibroDiario')
+DROP PROCEDURE usp_ObtenerListaLibroDiario
+
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'usp_LibroMayor')
+DROP PROCEDURE usp_LibroMayor
+
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'usp_RegistrarCuenta')
 DROP PROCEDURE usp_RegistrarCuenta
 
@@ -1025,8 +1035,28 @@ begin try
 	 from PRODUCTO_TIENDA pt
 	 inner join @tiendaproducto tp on tp.idtienda = pt.IdTienda and tp.idproducto = pt.IdProducto
 
-	 COMMIT
+	 DECLARE @total DECIMAL = CAST((select totalcosto from @detallecompra) AS DECIMAL)
+
+	-- ingreso de mercaderia
+	insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe)
+		 VALUES ((SELECT MAX(Asiento)+1 FROM LIBRO), 9, '+', @total)
+
+	-- Debemos a el proveedor
+	insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber) 
+	values((SELECT MAX(Asiento) FROM LIBRO), 18, '+', @total)
+
+	-- Restamos pasivo al proveedor
+	insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
+		values((SELECT MAX(Asiento)+1 FROM LIBRO), 18, '-', @total)
+
+	-- Restamos activo de la caja
+	insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber) 
+	values((SELECT MAX(Asiento) FROM LIBRO), 1, '-', @total)
+
+
 	 set @Resultado = 1
+	 COMMIT
+	 
 
  end try
  begin catch
@@ -1171,7 +1201,17 @@ begin try
 
 	insert into DETALLE_VENTA(IdVenta,IdProducto,Cantidad,PrecioUnidad,ImporteTotal)
 	select idventa,idproducto,cantidad,preciounidad,importetotal from @detalleventa
+	
+	--Guardamos Monto total
+	DECLARE @total decimal = (select importetotal from @detalleventa)
 
+	-- ingreso de mercaderia
+	insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber)
+		 VALUES ((SELECT MAX(Asiento)+1 FROM LIBRO), 9, '-', @total)
+
+	-- Restamos activo de la caja
+	insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
+	values((SELECT MAX(Asiento) FROM LIBRO), 1, '+', @total)
 
 	 COMMIT
 	 set @Resultado = (select ID from @identity)
@@ -1304,8 +1344,40 @@ begin
 	INNER JOIN CUENTA ON CUENTA.RubroId = Rubro.RubroId
 	ORDER BY NUMERO ASC
 end
-
 go
+
+create procedure usp_ObtenerListaLibroDiario(
+@FechaFiltro varchar(50)
+)
+as
+begin
+	SELECT L.Asiento as asiento, L.Fecha as fecha, CONCAT(PC.PlanCuentasId, '.', R.Numero, '.', C.Numero) AS Numero, PC.Tipo AS PlanCuentas, C.Tipo AS Cuenta,
+	L.DebeCuenta as debe, L.HaberCuenta, L.Debe, L.Haber
+	FROM PlanCuentas PC
+	INNER JOIN Rubro R ON PC.PlanCuentasId = R.PlanCuentasId
+	INNER JOIN CUENTA C ON C.RubroId = R.RubroId
+	INNER JOIN LIBRO L ON L.Cuenta = C.CuentasId
+	WHERE L.Fecha = @FechaFiltro
+	end
+go
+
+-- declare @caja varchar(50) = 'caja' exec usp_LibroMayor @caja
+
+create procedure usp_LibroMayor(
+@CuentaFiltro varchar(50)
+)
+as
+begin
+	SELECT L.Asiento as asiento, L.Fecha as fecha, CONCAT(PlanCuentas.PlanCuentasId, '.', R.Numero, '.', C.Numero) AS Numero, PLanCuentas.Tipo AS PlanCuentas, C.Tipo AS Cuenta,
+	L.DebeCuenta as debe, L.HaberCuenta, L.Debe, L.Haber
+	FROM PlanCuentas
+	INNER JOIN Rubro as R ON PlanCuentas.PlanCuentasId = R.PlanCuentasId
+	INNER JOIN CUENTA as C ON C.RubroId = R.RubroId
+	INNER JOIN LIBRO as L ON L.Cuenta = C.CuentasId
+	WHERE C.Tipo = @CuentaFiltro
+  end
+go
+
 
 create procedure usp_RegistrarCuenta(
 @PlanCuenta int,

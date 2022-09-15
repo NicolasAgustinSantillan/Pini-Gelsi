@@ -194,22 +194,23 @@ RIGHT('000000' + convert(varchar(max),(select isnull(max(ValorCodigo),0) + 1 fro
 (select top 1 IdCategoria from CATEGORIA where Descripcion = 'Lacteos')
 )
 
--- ingreso de mercaderia
+---- ingreso de mercaderia
+--insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
+--values(1, 9, '+', 10000)
+
+---- Debemos a el proveedor
+--insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber) 
+--values((SELECT MAX(Asiento) FROM LIBRO), 18, '+', 10000)
+
+---- Realizamos pago al proveedor
+---- Restamos pasivo al proveedor
+--insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
+--values((SELECT MAX(Asiento)+1 FROM LIBRO), 18, '-', 10000)
+
+---- Restamos activo de la caja
+--insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber) 
+--values((SELECT MAX(Asiento) FROM LIBRO), 1, '-', 10000)
+
+-- Ingreso en la caja la caja
 insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
-values(1, 9, '+', 10000)
-
--- Debemos a el proveedor
-insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber) 
-values((SELECT MAX(Asiento) FROM LIBRO), 18, '+', 10000)
-
--- Realizamos pago al proveedor
--- Restamos pasivo al proveedor
-insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
-values((SELECT MAX(Asiento)+1 FROM LIBRO), 18, '-', 10000)
-
--- Restamos activo de la caja
-insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber) 
-values((SELECT MAX(Asiento) FROM LIBRO), 1, '-', 10000)
-
-/*--CREAR PROVEEDOR
-INSERT INTO CUENTA(Numero, RubroId, Tipo) VALUES((select max(Numero) from CUENTA where RubroId = 7) + 1, 7, 'Marcos Proovedor')*/
+values(1, 1, '+', 10000)

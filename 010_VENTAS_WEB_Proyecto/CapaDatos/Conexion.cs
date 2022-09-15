@@ -8,6 +8,6 @@ namespace CapaDatos
 {
     public class Conexion
     {
-        public static string CN = "Data Source=localhost,1433;Initial Catalog=DBTIENDANAS;User ID=sa;Password=Panuelo81";
+        public static string CN = "Data Source=localhost,1434;Initial Catalog=DBTIENDANAS;User ID=sa;Password=Panuelo81";
     }
 }

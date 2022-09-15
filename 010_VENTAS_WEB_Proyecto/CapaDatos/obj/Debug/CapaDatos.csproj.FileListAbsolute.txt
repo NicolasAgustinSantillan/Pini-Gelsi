@@ -7,3 +7,12 @@ D:\WorkSpaceAD\YOUTUBE\010_FUNCIONALIDAD SISTEMA VENTAS WEB C#\Proyecto\CapaDato
 D:\WorkSpaceAD\YOUTUBE\010_FUNCIONALIDAD SISTEMA VENTAS WEB C#\Proyecto\CapaDatos\bin\Debug\CapaModelo.dll
 D:\WorkSpaceAD\YOUTUBE\010_FUNCIONALIDAD SISTEMA VENTAS WEB C#\Proyecto\CapaDatos\bin\Debug\CapaModelo.pdb
 D:\WorkSpaceAD\YOUTUBE\010_FUNCIONALIDAD SISTEMA VENTAS WEB C#\Proyecto\CapaDatos\obj\Debug\CapaDatos.csproj.CopyComplete
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaDatos\bin\Debug\CapaDatos.dll
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaDatos\bin\Debug\CapaDatos.pdb
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaDatos\bin\Debug\CapaModelo.dll
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaDatos\bin\Debug\CapaModelo.pdb
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaDatos\obj\Debug\CapaDatos.dll
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaDatos\obj\Debug\CapaDatos.pdb
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaDatos\obj\Debug\CapaDatos.csproj.AssemblyReference.cache
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaDatos\obj\Debug\CapaDatos.csproj.CoreCompileInputs.cache
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaDatos\obj\Debug\CapaDatos.csproj.CopyComplete

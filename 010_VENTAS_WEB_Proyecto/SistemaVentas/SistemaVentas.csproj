@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -2968,16 +2969,19 @@
     <Content Include="Controlador\frmConsultarCompra\frmConsultarCompra.js" />
     <Content Include="Controlador\frmConsultarVenta\frmConsultarVenta.js" />
     <Content Include="Controlador\frmCrearVenta\frmCrearVenta.js" />
+    <Content Include="Controlador\frmCuenta\frmCuenta.js" />
+    <Content Include="Controlador\frmLibroMayor\frmLibroMayor.js" />
     <Content Include="Controlador\frmProductoTienda\frmProductoTienda.js" />
     <Content Include="Controlador\frmProducto\frmProducto.js" />
     <Content Include="Controlador\frmProveedor\frmProveedor.js" />
-    <Content Include="Controlador\frmRegistrarCompra\frmRegistrarCompra.js" />
+    <Content Include="Controlador\frmRegistrarCompra\frmRegistraCompra.js" />
     <Content Include="Controlador\frmRolPermiso\frmRolPermiso.js" />
     <Content Include="Controlador\frmRol\frmRol.js" />
     <Content Include="Controlador\frmTienda\frmTienda.js" />
     <Content Include="Controlador\frmUsuario\frmUsuario.js" />
     <Content Include="Controlador\IniciarSesion\IniciarSesion.js" />
     <Content Include="Controlador\Inicio\Inicio.js" />
+    <Content Include="Controlador\frmLibroDiario\frmLibroDiario.js" />
     <Content Include="Controlador\rptProductoTienda\rptProductoTienda.js" />
     <Content Include="Controlador\rptVentas\rptVentas.js" />
     <Content Include="Controlador\Utilidades.js" />
@@ -2988,6 +2992,9 @@
     <Content Include="frmConsultarCompra.aspx" />
     <Content Include="frmConsultarVenta.aspx" />
     <Content Include="frmCrearVenta.aspx" />
+    <Content Include="frmCuentas.aspx" />
+    <Content Include="frmLibroDiario.aspx" />
+    <Content Include="frmLibroMayor.aspx" />
     <Content Include="frmProducto.aspx" />
     <Content Include="frmProductoTienda.aspx" />
     <Content Include="frmProveedor.aspx" />
@@ -3046,6 +3053,27 @@
     </Compile>
     <Compile Include="frmCrearVenta.aspx.designer.cs">
       <DependentUpon>frmCrearVenta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmCuentas.aspx.cs">
+      <DependentUpon>frmCuentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmCuentas.aspx.designer.cs">
+      <DependentUpon>frmCuentas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmLibroDiario.aspx.cs">
+      <DependentUpon>frmLibroDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmLibroDiario.aspx.designer.cs">
+      <DependentUpon>frmLibroDiario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmLibroMayor.aspx.cs">
+      <DependentUpon>frmLibroMayor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmLibroMayor.aspx.designer.cs">
+      <DependentUpon>frmLibroMayor.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmProducto.aspx.cs">
       <DependentUpon>frmProducto.aspx</DependentUpon>

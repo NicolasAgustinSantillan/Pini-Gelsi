@@ -62,6 +62,98 @@ namespace CapaDatos
             }
         }
 
+        public List<Libro> ObtenerLibroDiario(string Fecha = null)
+        {
+            if (Fecha == null)
+            {
+                DateTime date = DateTime.Now;
+                Fecha = date.ToString("yyyy-MM-dd");
+            }
+            List <Libro> rptListaLibroDiario = new List<Libro>();
+            using (SqlConnection oConexion = new SqlConnection(Conexion.CN))
+            {
+                SqlCommand cmd = new SqlCommand("usp_ObtenerListaLibroDiario", oConexion);
+                cmd.Parameters.AddWithValue("@fechaFiltro", Fecha);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                try
+                {
+                    oConexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        rptListaLibroDiario.Add(new Libro()
+                        {
+                            Asiento = Convert.ToInt32(dr["Asiento"]),
+                            Fecha = Convert.ToDateTime(dr["Fecha"]),
+                            Numero = dr["Numero"].ToString(),
+                            PlanCuentas = dr["PlanCuentas"].ToString(),
+                            Cuenta = dr["Cuenta"].ToString(),
+                            debe = dr["debe"].ToString(),
+                            HaberCuenta = dr["HaberCuenta"].ToString(),
+                            Debe = Convert.ToDecimal(dr["Debe"]),
+                            Haber = Convert.ToDecimal(dr["Haber"])
+                        });
+                    }
+                    dr.Close();
+
+                    var rptListaPlanCuentasRubros = rptListaLibroDiario.OrderBy(x => x.PlanCuentas).ToList();
+
+                    return rptListaPlanCuentasRubros;
+
+                }
+                catch (Exception ex)
+                {
+                    rptListaLibroDiario = null;
+                    return rptListaLibroDiario;
+                }
+            }
+        }
+        public List<Libro> ObtenerLibroMayor()
+        {
+            string Cuenta = "Caja";
+            List<Libro> rptListaLibroMayor = new List<Libro>();
+            using (SqlConnection oConexion = new SqlConnection(Conexion.CN))
+            {
+                SqlCommand cmd = new SqlCommand("usp_LibroMayor", oConexion);
+                cmd.Parameters.AddWithValue("@CuentaFiltro", Cuenta);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                try
+                {
+                    oConexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        rptListaLibroMayor.Add(new Libro()
+                        {
+                            Asiento = Convert.ToInt32(dr["Asiento"]),
+                            Fecha = Convert.ToDateTime(dr["Fecha"]),
+                            Numero = dr["Numero"].ToString(),
+                            PlanCuentas = dr["PlanCuentas"].ToString(),
+                            Cuenta = dr["Cuenta"].ToString(),
+                            debe = dr["debe"].ToString(),
+                            HaberCuenta = dr["HaberCuenta"].ToString(),
+                            Debe = Convert.ToDecimal(dr["Debe"]),
+                            Haber = Convert.ToDecimal(dr["Haber"])
+                        });
+                    }
+                    dr.Close();
+
+                    rptListaLibroMayor.OrderBy(x => x.PlanCuentas).ToList();
+
+                    return rptListaLibroMayor;
+
+                }
+                catch (Exception ex)
+                {
+                    rptListaLibroMayor = null;
+                    return rptListaLibroMayor;
+                }
+            }
+        }
         public bool RegistrarCuenta(PlanCuentasRubros oCuenta)
         {
             bool respuesta = true;

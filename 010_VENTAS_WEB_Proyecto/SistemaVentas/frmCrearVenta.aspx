@@ -74,8 +74,8 @@
                                      <label class="input-group-text" for="inputGroupSelect01">Tipo Documento</label>
                                   </div>
                                   <select class="custom-select" id="cboventatipodocumento">
-                                    <option value="Boleta">Factura A</option>
-                                    <option value="Factura">Factura B</option>
+                                    <option value="Factura A">Factura A</option>
+                                    <option value="Factura B">Factura B</option>
                                   </select>
                                 </div>
                             </div>
@@ -399,5 +399,5 @@
     </div>
 
 
-    <script src="Controlador/frmCrearVenta-/frmCrearVenta.js"></script>
+    <script src="Controlador/frmCrearVenta/frmCrearVenta.js"></script>
 </asp:Content>

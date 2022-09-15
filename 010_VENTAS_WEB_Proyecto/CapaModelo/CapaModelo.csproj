@@ -46,6 +46,7 @@
     <Compile Include="Compra.cs" />
     <Compile Include="DetalleCompra.cs" />
     <Compile Include="DetalleVenta.cs" />
+    <Compile Include="Libro.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Permisos.cs" />
     <Compile Include="PlanCuenta.cs" />

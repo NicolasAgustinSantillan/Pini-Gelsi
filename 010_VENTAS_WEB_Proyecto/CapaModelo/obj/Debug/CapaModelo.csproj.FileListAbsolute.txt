@@ -4,3 +4,9 @@ D:\WorkSpaceAD\YOUTUBE\010_FUNCIONALIDAD SISTEMA VENTAS WEB C#\Proyecto\CapaMode
 D:\WorkSpaceAD\YOUTUBE\010_FUNCIONALIDAD SISTEMA VENTAS WEB C#\Proyecto\CapaModelo\obj\Debug\CapaModelo.csproj.CoreCompileInputs.cache
 D:\WorkSpaceAD\YOUTUBE\010_FUNCIONALIDAD SISTEMA VENTAS WEB C#\Proyecto\CapaModelo\obj\Debug\CapaModelo.dll
 D:\WorkSpaceAD\YOUTUBE\010_FUNCIONALIDAD SISTEMA VENTAS WEB C#\Proyecto\CapaModelo\obj\Debug\CapaModelo.pdb
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaModelo\bin\Debug\CapaModelo.dll
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaModelo\bin\Debug\CapaModelo.pdb
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaModelo\obj\Debug\CapaModelo.dll
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaModelo\obj\Debug\CapaModelo.pdb
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaModelo\obj\Debug\CapaModelo.csproj.AssemblyReference.cache
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\CapaModelo\obj\Debug\CapaModelo.csproj.CoreCompileInputs.cache

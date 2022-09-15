@@ -35,6 +35,7 @@ RubroId int references Rubro(RubroId) NOT NULL,
 Tipo varchar(100)
 )
 GO
+
 -- VISTA CUENTAS
 CREATE VIEW PlanCuentasRubros
 AS
@@ -53,7 +54,6 @@ Descripcion varchar(60),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 GO
 
 --(2) TABLA TIENDA
@@ -67,7 +67,6 @@ Telefono varchar(50),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 GO
 
 --(3) TABLA MENU
@@ -79,7 +78,6 @@ Icono varchar(60),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 GO
 
 --(4) TABLA SUBMENU
@@ -92,7 +90,6 @@ NombreFormulario varchar(60),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 GO
 
 --(5) TABLA USUARIO
@@ -109,7 +106,6 @@ IdRol int references ROL(IdRol),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 GO
 
 --(6) TABLA PERMISOS
@@ -121,8 +117,8 @@ IdSubMenu int references SUBMENU(IdSubMenu),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 go
+
 --(7) TABLA PROVEEDOR
 if not exists (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'PROVEEDOR')
 create table PROVEEDOR(
@@ -135,7 +131,6 @@ Direccion varchar(50),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 go
 
 --(8) TABLA CATEGORIA
@@ -146,7 +141,6 @@ Descripcion varchar(100),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 go
 
 
@@ -162,7 +156,6 @@ IdCategoria int references CATEGORIA(IdCategoria),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 go
 
 
@@ -179,7 +172,6 @@ Activo bit default 1,
 Iniciado bit default 0,
 FechaRegistro datetime default getdate()
 )
-
 go
 
 --(9) TABLA COMPRA
@@ -194,7 +186,6 @@ TipoComprobante varchar(50) default 'Boleta',
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 go
 
 --(10) TABLA DETALLE_COMPRA
@@ -210,7 +201,6 @@ TotalCosto float,
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 go
 
 -- (10) TABLA CLIENTE
@@ -225,7 +215,6 @@ Telefono varchar(40),
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 go 
 
 -- (11) TABLA VENTA
@@ -246,9 +235,7 @@ ImporteCambio float,
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 go
-
 
 -- (12) TABLA DETALLE_VENTA
 if not exists (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'DETALLE_VENTA')
@@ -262,7 +249,6 @@ ImporteTotal float,
 Activo bit default 1,
 FechaRegistro datetime default getdate()
 )
-
 go
 
 if not exists (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'LIBRO')
@@ -271,24 +257,25 @@ IdLibro Int Primary Key Identity(1,1),
 Asiento int not null,
 Fecha DateTime Default convert(char(10),GETDATE(),112) not null,
 Cuenta Int references CUENTA(CuentasId),
-DebeCuenta Varchar(100) ,
-HaberCuenta Varchar(100) ,
-Debe Decimal Default 0 not null,
-Haber Decimal Default 0 not null,
+DebeCuenta Varchar(100) NULL,
+HaberCuenta Varchar(100) NULL,
+Debe Decimal Default 0 NULL,
+Haber Decimal Default 0 NULL,
 )
 go
 
+CREATE VIEW Libros
+as
+	SELECT LIBRO.Asiento, LIBRO.Fecha, CONCAT(PlanCuentas.PlanCuentasId, '.', Rubro.Numero, '.', CUENTA.Numero) AS Numero, PLanCuentas.Tipo AS PlanCuentas, CUENTA.Tipo AS Cuenta,
+	LIBRO.DebeCuenta, LIBRO.HaberCuenta, LIBRO.Debe, LIBRO.Haber
+	FROM PlanCuentas
+	INNER JOIN Rubro ON PlanCuentas.PlanCuentasId = Rubro.PlanCuentasId
+	INNER JOIN CUENTA ON CUENTA.RubroId = Rubro.RubroId
+	INNER JOIN LIBRO ON LIBRO.Cuenta = CUENTA.CuentasId
+go
 
---CREATE VIEW Libros
---as
---	SELECT LIBRO.Asiento, LIBRO.Fecha, CONCAT(PlanCuentas.PlanCuentasId, '.', Rubro.Numero, '.', CUENTA.Numero) AS Numero, PLanCuentas.Tipo AS PlanCuentas, CUENTA.Tipo AS Cuenta,
---	LIBRO.DebeCuenta, LIBRO.HaberCuenta, LIBRO.Debe, LIBRO.Haber
---	FROM PlanCuentas
---	INNER JOIN Rubro ON PlanCuentas.PlanCuentasId = Rubro.PlanCuentasId
---	INNER JOIN CUENTA ON CUENTA.RubroId = Rubro.RubroId
---	INNER JOIN LIBRO ON LIBRO.Cuenta = CUENTA.CuentasId
-
-
+--select * from Libros
+--select * from LIBRO
 --select * from Libros where Libros.Cuenta = 'Caja'
 
 --select * from Libros where Libros.Asiento = 2

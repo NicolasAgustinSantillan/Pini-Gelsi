@@ -65,17 +65,17 @@ $('#btnBuscarProducto').on('click', function () {
             $(".modal-body").LoadingOverlay("hide");
             if (response.estado) {
                 $.each(response.objeto, function (i, row) {
-                        $("<tr>").append(
-                            $("<td>").append(
-                                $("<button>").addClass("btn btn-sm btn-primary ml-2").append(
-                                    $("<i>").addClass("fa fa-check").attr({"aria-hidden":"true"})
-                                ).data("producto", row)
-                            ),
-                            $("<td>").text(row.oProducto.Codigo),
-                            $("<td>").text(row.oProducto.Nombre),
-                            $("<td>").text(row.oProducto.Descripcion),
-                            $("<td>").text(row.Stock)
-                        ).appendTo("#tbProducto tbody");
+                    $("<tr>").append(
+                        $("<td>").append(
+                            $("<button>").addClass("btn btn-sm btn-primary ml-2").append(
+                                $("<i>").addClass("fa fa-check").attr({ "aria-hidden": "true" })
+                            ).data("producto", row)
+                        ),
+                        $("<td>").text(row.oProducto.Codigo),
+                        $("<td>").text(row.oProducto.Nombre),
+                        $("<td>").text(row.oProducto.Descripcion),
+                        $("<td>").text(row.Stock)
+                    ).appendTo("#tbProducto tbody");
                 })
             }
             table = $('#tbProducto').DataTable();
@@ -113,7 +113,7 @@ $("#txtproductocodigo").on('keypress', function (e) {
                 $("#txtproductocodigo").LoadingOverlay("hide");
                 var encontrado = false;
                 if (response.estado) {
-                    
+
                     $.each(response.objeto, function (i, row) {
                         if (row.oProducto.Codigo == $("#txtproductocodigo").val()) {
                             $("#txtIdProducto").val(row.oProducto.IdProducto);
@@ -145,7 +145,7 @@ $("#txtproductocodigo").on('keypress', function (e) {
             function () {
                 $("#txtproductocodigo").LoadingOverlay("show");
             })
-       
+
     }
 });
 
@@ -154,63 +154,55 @@ $('#btnAgregar').on('click', function () {
 
     $("#txtproductocantidad").val($("#txtproductocantidad").val() == "" ? "0" : $("#txtproductocantidad").val());
 
-    var stockProducto = $('#txtproductostock').val();
+    var existe_codigo = false;
+    if (
+        parseInt($("#txtIdProducto").val()) == 0 ||
+        parseFloat($("#txtproductocantidad").val()) == 0
+    ) {
+        swal("Mensaje", "Debe completar todos los campos del producto", "warning")
+        return;
+    }
 
-    var stockSolicitado = $('#txtproductocantidad').val();
+    $('#tbVenta > tbody  > tr').each(function (index, tr) {
+        var fila = tr;
+        var idproducto = $(fila).find("td.producto").data("idproducto");
 
-    if (stockSolicitado < stockProducto + 1) {
-        var existe_codigo = false;
-        if (
-            parseInt($("#txtIdProducto").val()) == 0 ||
-            parseFloat($("#txtproductocantidad").val()) == 0
-        ) {
-            swal("Mensaje", "Debe completar todos los campos del producto", "warning")
-            return;
+        if (idproducto == $("#txtIdProducto").val()) {
+            existe_codigo = true;
+            return false;
         }
 
-        $('#tbVenta > tbody  > tr').each(function (index, tr) {
-            var fila = tr;
-            var idproducto = $(fila).find("td.producto").data("idproducto");
+    });
 
-            if (idproducto == $("#txtIdProducto").val()) {
-                existe_codigo = true;
-                return false;
-            }
+    if (!existe_codigo) {
 
-        });
+        controlarStock(parseInt($("#txtIdProducto").val()), parseInt($("#txtIdTienda").val()), parseInt($("#txtproductocantidad").val()), true);
 
-        if (!existe_codigo) {
+        var importetotal = parseFloat($("#txtproductoprecio").val()) * parseFloat($("#txtproductocantidad").val());
+        $("<tr>").append(
+            $("<td>").append(
+                $("<button>").addClass("btn btn-danger btn-sm").text("Eliminar").data("idproducto", parseInt($("#txtIdProducto").val())).data("cantidadproducto", parseInt($("#txtproductocantidad").val()))
+            ),
+            $("<td>").addClass("productocantidad").text($("#txtproductocantidad").val()),
+            $("<td>").addClass("producto").data("idproducto", $("#txtIdProducto").val()).text($("#txtproductonombre").val()),
+            $("<td>").text($("#txtproductodescripcion").val()),
+            $("<td>").addClass("productoprecio").text($("#txtproductoprecio").val()),
+            $("<td>").addClass("importetotal").text(importetotal)
+        ).appendTo("#tbVenta tbody");
 
-            controlarStock(parseInt($("#txtIdProducto").val()), parseInt($("#txtIdTienda").val()), parseInt($("#txtproductocantidad").val()), true);
+        $("#txtIdProducto").val("0");
+        $("#txtproductocodigo").val("");
+        $("#txtproductonombre").val("");
+        $("#txtproductodescripcion").val("");
+        $("#txtproductostock").val("");
+        $("#txtproductoprecio").val("");
+        $("#txtproductocantidad").val("0");
 
-            var importetotal = parseFloat($("#txtproductoprecio").val()) * parseFloat($("#txtproductocantidad").val());
-            $("<tr>").append(
-                $("<td>").append(
-                    $("<button>").addClass("btn btn-danger btn-sm").text("Eliminar").data("idproducto", parseInt($("#txtIdProducto").val())).data("cantidadproducto", parseInt($("#txtproductocantidad").val()))
-                ),
-                $("<td>").addClass("productocantidad").text($("#txtproductocantidad").val()),
-                $("<td>").addClass("producto").data("idproducto", $("#txtIdProducto").val()).text($("#txtproductonombre").val()),
-                $("<td>").text($("#txtproductodescripcion").val()),
-                $("<td>").addClass("productoprecio").text($("#txtproductoprecio").val()),
-                $("<td>").addClass("importetotal").text(importetotal)
-            ).appendTo("#tbVenta tbody");
+        $("#txtproductocodigo").focus();
 
-            $("#txtIdProducto").val("0");
-            $("#txtproductocodigo").val("");
-            $("#txtproductonombre").val("");
-            $("#txtproductodescripcion").val("");
-            $("#txtproductostock").val("");
-            $("#txtproductoprecio").val("");
-            $("#txtproductocantidad").val("0");
-
-            $("#txtproductocodigo").focus();
-
-            calcularPrecios();
-        } else {
-            swal("Mensaje", "El producto ya existe en la venta", "warning")
-        }
+        calcularPrecios();
     } else {
-        swal("Mensaje", "El stock no es suficiente", "warning")
+        swal("Mensaje", "El producto ya existe en la venta", "warning");
     }
 })
 
@@ -251,7 +243,7 @@ $('#btnTerminarGuardarVenta').on('click', function () {
     var DETALLE_CLIENTE = "";
     var DETALLE_VENTA = "";
     var DATOS_VENTA = "";
-    
+
     calcularCambio();
 
     $('#tbVenta > tbody  > tr').each(function (index, tr) {
@@ -264,13 +256,13 @@ $('#btnTerminarGuardarVenta').on('click', function () {
         $totalproductos = $totalproductos + productocantidad;
         $totalimportes = $totalimportes + importetotal;
 
-        DATOS_VENTA = DATOS_VENTA + "<DATOS>"+
+        DATOS_VENTA = DATOS_VENTA + "<DATOS>" +
             "<IdVenta> 0</IdVenta >" +
             "<IdProducto>" + idproducto + "</IdProducto>" +
             "<Cantidad>" + productocantidad + "</Cantidad>" +
             "<PrecioUnidad>" + productoprecio + "</PrecioUnidad>" +
             "<ImporteTotal>" + importetotal + "</ImporteTotal>" +
-        "</DATOS>"
+            "</DATOS>"
     });
 
 
@@ -287,11 +279,11 @@ $('#btnTerminarGuardarVenta').on('click', function () {
         "</VENTA >";
 
     DETALLE_CLIENTE = "<DETALLE_CLIENTE><DATOS>" +
-        "<TipoDocumento>" + $("#cboclientetipodocumento").val() +"</TipoDocumento>" +
-        "<NumeroDocumento>" + $("#txtclientedocumento").val() +"</NumeroDocumento>" +
-        "<Nombre>" + $("#txtclientenombres").val() +"</Nombre>" +
-        "<Direccion>" + $("#txtclientedireccion").val() +"</Direccion>" +
-        "<Telefono>" + $("#txtclientetelefono").val() +"</Telefono>" +
+        "<TipoDocumento>" + $("#cboclientetipodocumento").val() + "</TipoDocumento>" +
+        "<NumeroDocumento>" + $("#txtclientedocumento").val() + "</NumeroDocumento>" +
+        "<Nombre>" + $("#txtclientenombres").val() + "</Nombre>" +
+        "<Direccion>" + $("#txtclientedireccion").val() + "</Direccion>" +
+        "<Telefono>" + $("#txtclientetelefono").val() + "</Telefono>" +
         "</DATOS></DETALLE_CLIENTE>";
 
     DETALLE_VENTA = "<DETALLE_VENTA>" + DATOS_VENTA + "</DETALLE_VENTA>";
@@ -305,7 +297,7 @@ $('#btnTerminarGuardarVenta').on('click', function () {
             $(".card-venta").LoadingOverlay("hide");
             if (response.estado) {
                 //DOCUMENTO
-                $("#cboventatipodocumento").val("Boleta");
+                $("#cboventatipodocumento").val("Factura A");
 
                 //CLIENTE
                 $("#cboclientetipodocumento").val("DNI");
@@ -336,7 +328,7 @@ $('#btnTerminarGuardarVenta').on('click', function () {
 
                 var url = 'docVenta.aspx?id=' + response.valor;
                 window.open(url, '', 'height=600,width=800,scrollbars=0,location=1,toolbar=0');
-                
+
             } else {
                 swal("Mensaje", "No se pudo registrar la venta", "warning")
             }
@@ -385,7 +377,7 @@ function calcularPrecios() {
 
 
 
-function controlarStock($idproducto,$idtienda,$cantidad,$restar) {
+function controlarStock($idproducto, $idtienda, $cantidad, $restar) {
     var request = {
         idproducto: $idproducto,
         idtienda: $idtienda,
@@ -393,7 +385,7 @@ function controlarStock($idproducto,$idtienda,$cantidad,$restar) {
         restar: $restar
     }
 
-    AjaxPost("../frmCrearVenta.aspx/ControlarStock", JSON.stringify(request) ,
+    AjaxPost("../frmCrearVenta.aspx/ControlarStock", JSON.stringify(request),
         function (response) {
             if (response.estado) {
             }
