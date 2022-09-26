@@ -113,10 +113,10 @@ INSERT INTO TIENDA(Nombre,RUC,Direccion,Telefono) VALUES ('Tienda 93','256897896
 GO
 --REGISTROS USUARIO
 insert into usuario(Nombres,Apellidos,Correo,Usuario,Clave,IdTienda,IdRol)
-values('Nicolas','Santillan','snk@gmail.com','Admin','Admin123',(select TOP 1 IdTienda from TIENDA where Nombre = 'Tienda 93'),(select TOP 1 IdRol from ROL where Descripcion = 'ADMINISTRADOR'))
+values('Nicolas','Santillan','nick@gmail.com','Admin','Admin123',(select TOP 1 IdTienda from TIENDA where Nombre = 'Tienda 93'),(select TOP 1 IdRol from ROL where Descripcion = 'ADMINISTRADOR'))
 go
 insert into usuario(Nombres,Apellidos,Correo,Usuario,Clave,IdTienda,IdRol)
-values('Juan','Perez','snk@gmail.com','Tienda','Tienda123',(select TOP 1 IdTienda from TIENDA where Nombre = 'Tienda 93'),(select TOP 1 IdRol from ROL where Descripcion = 'EMPLEADO'))
+values('Juan','Perez','perez@gmail.com','Tienda','Tienda123',(select TOP 1 IdTienda from TIENDA where Nombre = 'Tienda 93'),(select TOP 1 IdRol from ROL where Descripcion = 'EMPLEADO'))
 
 
 GO
@@ -139,17 +139,18 @@ GO
 INSERT INTO CATEGORIA(Descripcion) VALUES
 ('Bebidas'),
 ('Frutas'),
-('Embutidos'),
+('Carnes'),
 ('Lacteos')
 
 GO
---REGISTRO EN TABLA PRODUCTO
+--REGISTRO EN TABLA PRODUCTO 
+/*
 INSERT INTO PRODUCTO(Codigo,ValorCodigo,Nombre,Descripcion,IdCategoria)
 values
 (
 RIGHT('000000' + convert(varchar(max),(select isnull(max(ValorCodigo),0) + 1 from PRODUCTO)),6),
 (select isnull(max(ValorCodigo),0) + 1 from PRODUCTO),
-'Inca Kola',
+'Cordoba cola',
 'Gaseosa 3Lts',
 (select top 1 IdCategoria from CATEGORIA where Descripcion = 'Bebidas')
 )
@@ -159,9 +160,9 @@ values
 (
 RIGHT('000000' + convert(varchar(max),(select isnull(max(ValorCodigo),0) + 1 from PRODUCTO)),6),
 (select isnull(max(ValorCodigo),0) + 1 from PRODUCTO),
-'Mantequilla Gloria',
-'bote de 500 mg',
-(select top 1 IdCategoria from CATEGORIA where Descripcion = 'Embutidos')
+'Churrasco',
+'1 kl',
+(select top 1 IdCategoria from CATEGORIA where Descripcion = 'Carnes')
 )
 GO
 INSERT INTO PRODUCTO(Codigo,ValorCodigo,Nombre,Descripcion,IdCategoria)
@@ -179,7 +180,7 @@ values
 (
 RIGHT('000000' + convert(varchar(max),(select isnull(max(ValorCodigo),0) + 1 from PRODUCTO)),6),
 (select isnull(max(ValorCodigo),0) + 1 from PRODUCTO),
-'Mermelada Fanny',
+'Mermelada durazno damasco',
 'Bote 310g',
 (select top 1 IdCategoria from CATEGORIA where Descripcion = 'Embutidos')
 )
@@ -189,28 +190,11 @@ values
 (
 RIGHT('000000' + convert(varchar(max),(select isnull(max(ValorCodigo),0) + 1 from PRODUCTO)),6),
 (select isnull(max(ValorCodigo),0) + 1 from PRODUCTO),
-'Queso Perfecta',
+'Queso mantecoso',
 'Empaque 350g',
 (select top 1 IdCategoria from CATEGORIA where Descripcion = 'Lacteos')
 )
+*/
 
----- ingreso de mercaderia
---insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
---values(1, 9, '+', 10000)
-
----- Debemos a el proveedor
---insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber) 
---values((SELECT MAX(Asiento) FROM LIBRO), 18, '+', 10000)
-
----- Realizamos pago al proveedor
----- Restamos pasivo al proveedor
---insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
---values((SELECT MAX(Asiento)+1 FROM LIBRO), 18, '-', 10000)
-
----- Restamos activo de la caja
---insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber) 
---values((SELECT MAX(Asiento) FROM LIBRO), 1, '-', 10000)
-
--- Ingreso en la caja la caja
 insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
 values(1, 1, '+', 10000)

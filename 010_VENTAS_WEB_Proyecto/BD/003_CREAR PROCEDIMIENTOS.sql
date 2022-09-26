@@ -1178,8 +1178,8 @@ begin try
 		 PrecioUnidad = Node.Data.value('(PrecioUnidad)[1]','float'),
 		 ImporteTotal = Node.Data.value('(ImporteTotal)[1]','float')
 		 FROM @Detalle.nodes('/DETALLE/DETALLE_VENTA/DATOS') Node(Data)
-
-	--******************* AREA DE TRABAJO *************************
+		 
+	--******************* AREA DE TRABAJO ************************* 
 	declare @identity as table(ID int)
 
 	insert into CLIENTE(TipoDocumento,NumeroDocumento,Nombre,Direccion,Telefono)
@@ -1188,7 +1188,7 @@ begin try
 
 	update @venta set idcliente = (select ID from @identity)
 	delete from @identity
-
+	--select * from VENTA
 	insert into VENTA(Codigo,ValorCodigo,IdTienda,IdUsuario,IdCliente,TipoDocumento,CantidadProducto,CantidadTotal,TotalCosto,ImporteRecibido,ImporteCambio)
 	output inserted.IdVenta into @identity
 	select 
@@ -1203,7 +1203,8 @@ begin try
 	select idventa,idproducto,cantidad,preciounidad,importetotal from @detalleventa
 	
 	--Guardamos Monto total
-	DECLARE @total decimal = (select importetotal from @detalleventa)
+	DECLARE @total decimal 
+	select @total = CAST(importetotal as decimal) from @detalleventa
 
 	-- ingreso de mercaderia
 	insert into LIBRO(Asiento, Cuenta, HaberCuenta, Haber)
@@ -1213,8 +1214,10 @@ begin try
 	insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe) 
 	values((SELECT MAX(Asiento) FROM LIBRO), 1, '+', @total)
 
-	 COMMIT
-	 set @Resultado = (select ID from @identity)
+	set @Resultado = (select ID from @identity)
+
+	COMMIT
+	 
 
  end try
  begin catch

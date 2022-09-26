@@ -260,7 +260,7 @@
                                           <div class="col-sm-3">
                                             <div class="form-group mb-0">
                                               <label for="txtproductoprecio" class="col-form-label col-form-label-sm">Precio:</label>
-                                              <input type="text" class="form-control form-control-sm model" readonly id="txtproductoprecio" name="Nombre">
+                                              <input type="text" class="form-control form-control-sm model" id="txtproductoprecio" name="Nombre">
                                             </div>
                                           </div>
                                           <div class="col-sm-3">
