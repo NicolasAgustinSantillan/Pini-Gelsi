@@ -17,5 +17,6 @@ namespace CapaModelo
         public string HaberCuenta { get; set; }
         public decimal Debe { get; set; }
         public decimal Haber { get; set; }
+        public decimal Saldo { get; set; }
     }
 }

@@ -6,7 +6,7 @@ $(document).ready(function () {
 });
 
 function cargarDatos(cadena) {
-
+    
     if ($.fn.DataTable.isDataTable('#tbLibroMayor')) {
         $('#tbLibroMayor').DataTable().destroy();
     }

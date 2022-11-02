@@ -913,6 +913,7 @@ begin
 		DECLARE @IdProducto INT = SCOPE_IDENTITY()
 		DECLARE @IdTienda INT = 1
 		DECLARE @ResultadoStore BIT
+		
 		EXEC usp_RegistrarProductoTienda @IdProducto, @idTienda, @ResultadoStore;
 		END
 	ELSE
@@ -1016,6 +1017,16 @@ begin try
 
 
 	 --******************* AREA DE TRABAJO *************************
+	 DECLARE @total DECIMAL = CAST((select totalcosto from @detallecompra) AS DECIMAL)
+
+	 
+	 DECLARE @SALDO DECIMAL 
+	 select @SALDO = (SUM(Debe) - SUM(Haber)) from LIBRO L WHERE L.Cuenta = 1
+     SELECT @SALDO
+
+	 --IF(@total > @SALDO)
+		--RETURN -1
+
 	 declare @IdCompra int = 0
 
 	 insert into COMPRA(IdUsuario,IdProveedor,IdTienda,TotalCosto)
@@ -1035,7 +1046,7 @@ begin try
 	 from PRODUCTO_TIENDA pt
 	 inner join @tiendaproducto tp on tp.idtienda = pt.IdTienda and tp.idproducto = pt.IdProducto
 
-	 DECLARE @total DECIMAL = CAST((select totalcosto from @detallecompra) AS DECIMAL)
+	 --DECLARE @total DECIMAL = CAST((select totalcosto from @detallecompra) AS DECIMAL)
 
 	-- ingreso de mercaderia
 	insert into LIBRO(Asiento, Cuenta, DebeCuenta, Debe)
@@ -1364,6 +1375,7 @@ begin
 	end
 go
 
+-- select * from LIBRO
 -- declare @caja varchar(50) = 'caja' exec usp_LibroMayor @caja
 
 create procedure usp_LibroMayor(

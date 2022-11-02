@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDatos
+namespace CapaDatosForms
 {
     public class CD_Contable
     {
@@ -110,9 +110,10 @@ namespace CapaDatos
                 }
             }
         }
-        public List<Libro> ObtenerLibroMayor()
+        public List<Libro> ObtenerLibroMayor(string Cuenta, out decimal saldo)
         {
-            string Cuenta = "Caja";
+            if (Cuenta == null || Cuenta == "")
+                Cuenta = "Caja";
             List<Libro> rptListaLibroMayor = new List<Libro>();
             using (SqlConnection oConexion = new SqlConnection(Conexion.CN))
             {
@@ -144,11 +145,21 @@ namespace CapaDatos
 
                     rptListaLibroMayor.OrderBy(x => x.PlanCuentas).ToList();
 
+                    decimal Debe = 0, Haber = 0;
+                    for (int i = 0; i < rptListaLibroMayor.Count; i++)
+                    {
+                        Debe += rptListaLibroMayor[i].Debe;
+                        Haber += rptListaLibroMayor[i].Haber;
+                    }
+
+                    saldo = Debe - Haber;
+
                     return rptListaLibroMayor;
 
                 }
                 catch (Exception ex)
                 {
+                    saldo = 0;
                     rptListaLibroMayor = null;
                     return rptListaLibroMayor;
                 }

@@ -174,6 +174,9 @@ FechaRegistro datetime default getdate()
 )
 go
 
+select * from PRODUCTO_TIENDA PT 
+inner join PRODUCTO P on PT.IdProducto = P.IdProducto
+
 --(9) TABLA COMPRA
 if not exists (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'COMPRA')
 create table COMPRA(
@@ -260,8 +263,12 @@ Cuenta Int references CUENTA(CuentasId),
 DebeCuenta Varchar(100) NULL,
 HaberCuenta Varchar(100) NULL,
 Debe Decimal Default 0 NULL,
-Haber Decimal Default 0 NULL,
+Haber Decimal Default 0 NULL
 )
+go
+
+--select * from LIBRO where Cuenta = 1
+--select * from CUENTA
 go
 
 CREATE VIEW Libros

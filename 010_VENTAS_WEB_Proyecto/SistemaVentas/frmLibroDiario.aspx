@@ -14,7 +14,13 @@
                   <div class="card-body">
                         <div class="row">
                             <div class="col-sm-2">
-                                <strong>Implementar filtro</strong>
+                                <input type="date" id="" name="trip-start"
+                                value="2022-09-01"
+                                min="2022-01-01" max="2030-12-31"
+                                    class="form-control target">
+                            </div>
+                            <div class="col-sm-2">
+                                <button id="buscarFiltro" type="button" class="btn btn-primary">Buscar</button>
                             </div>
                         </div>
                       <hr />
@@ -45,5 +51,5 @@
             </div>
     </div>
 
-        <script src="Controlador/frmLibroDiario/frmLibroDiario.js"></script>
+    <script src="Controlador/frmLibroDiario/frmLibroDiario.js"></script>
 </asp:Content>

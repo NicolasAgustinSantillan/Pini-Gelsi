@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace CapaDatos
+namespace CapaDatosForms
 {
     public class CD_Compra
     {

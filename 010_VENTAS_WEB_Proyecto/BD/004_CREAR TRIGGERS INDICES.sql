@@ -33,7 +33,7 @@ BEGIN TRY
 
 			IF (@precioUnidadOriginal != @precioUnidad)
 				BEGIN
-					update PRODUCTO_TIENDA set PrecioUnidadVenta = @precioUnidad WHERE IdProducto = @idProducto
+					--update PRODUCTO_TIENDA set PrecioUnidadVenta = @precioUnidad WHERE IdProducto = @idProducto
 					INSERT INTO PRODUCTO_TIENDA_HISTORICO(IdProducto, PrecioUnidadVentaViejo, PrecioUnidadVentaNuevo) VALUES (@idProducto, @precioUnidadOriginal, @precioUnidad)
 				END
 		COMMIT
@@ -46,3 +46,26 @@ END CATCH;
 GO
 
 -- select * from PRODUCTO_TIENDA_HISTORICO
+
+
+-- INDICES
+if exists (select name from sysindexes where name = 'coberturaLibro') drop index coberturaLibro on Libro
+create index coberturaLibro on Libro (IdLibro) include (asiento, Fecha, DebeCuenta, HaberCuenta, Debe, Haber)
+
+if exists (select name from sysindexes where name = 'coberturaCuenta') drop index coberturaCuenta on CUENTA
+create index coberturaCuenta on CUENTA (RubroId) include (Numero, Tipo)
+
+if exists (select name from sysindexes where name = 'coberturaRubro') drop index coberturaRubro on Rubro
+create index coberturaRubro on Rubro (PlanCuentasId) include (Numero)
+
+if exists (select name from sysindexes where name = 'libro') drop index libro on LIBRO
+create index libro on LIBRO (asiento)
+
+SELECT L.Asiento as asiento, L.Fecha as fecha, CONCAT(PlanCuentas.PlanCuentasId, '.', R.Numero, '.', C.Numero) AS Numero, PLanCuentas.Tipo AS PlanCuentas, C.Tipo AS Cuenta,
+	L.DebeCuenta as debe, L.HaberCuenta, L.Debe, L.Haber
+	FROM PlanCuentas
+	INNER JOIN Rubro as R ON PlanCuentas.PlanCuentasId = R.PlanCuentasId
+	INNER JOIN CUENTA as C ON C.RubroId = R.RubroId
+	INNER JOIN LIBRO as L ON L.Cuenta = C.CuentasId
+
+select GETDATE()

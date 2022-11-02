@@ -1,4 +1,4 @@
-﻿using CapaDatos;
+﻿using CapaDatosForms;
 using CapaModelo;
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace SistemaVentas
         public static Respuesta<List<Libro>> Obtener()
         {
             List<Libro> oListaRol = new List<Libro>();
-            oListaRol = CD_Contable.Instancia.ObtenerLibroMayor();
+            oListaRol = CD_Contable.Instancia.ObtenerLibroMayor("Caja", out decimal saldo);
 
             if (oListaRol != null)
             {

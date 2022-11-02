@@ -235,6 +235,34 @@ $('#btnTerminarGuardarVenta').on('click', function () {
         return;
     }
 
+    //VALIDACION DE CUIT
+    try {
+        var CUIT = $("#txtclientedocumento").val();
+        if (esCUITValida(CUIT) == false)
+        {
+            swal("Mensaje", "El cuit no es valido: " + CUIT, "warning")
+            return;
+        }
+    } catch
+    {
+        swal("Mensaje", "El cuit no es valido", "warning")
+        return;
+    }
+
+    //Aplica o no el IVA
+    var tipoFactura = $("#cboventatipodocumento").val()
+    alert(tipoFactura);
+
+        $('#tbVenta > tbody  > tr').each(function (index, tr) {
+            var fila = tr;
+            var productoprecio = parseFloat($(fila).find("td.productoprecio").text());
+            alert(productoprecio)
+            productoprecio *= 1.21
+            parseFloat($(fila).find("td.productoprecio").text(productoprecio.toString()));
+            alert(productoprecio)
+        })
+    
+
     var $totalproductos = 0;
     var $totalimportes = 0;
 
@@ -409,3 +437,18 @@ window.onbeforeunload = function () {
         });
     }
 };
+
+function esCUITValida(inputValor) {
+    inputString = inputValor.toString()
+    if (inputString.length == 11) {
+        var Caracters_1_2 = inputString.charAt(0) + inputString.charAt(1)
+        if (Caracters_1_2 == "20" || Caracters_1_2 == "23" || Caracters_1_2 == "24" || Caracters_1_2 == "27" || Caracters_1_2 == "30" || Caracters_1_2 == "33" || Caracters_1_2 == "34") {
+            var Count = inputString.charAt(0) * 5 + inputString.charAt(1) * 4 + inputString.charAt(2) * 3 + inputString.charAt(3) * 2 + inputString.charAt(4) * 7 + inputString.charAt(5) * 6 + inputString.charAt(6) * 5 + inputString.charAt(7) * 4 + inputString.charAt(8) * 3 + inputString.charAt(9) * 2 + inputString.charAt(10) * 1
+            Division = Count / 11;
+            if (Division == Math.floor(Division)) {
+                return true
+            }
+        }
+    }
+    return false
+}

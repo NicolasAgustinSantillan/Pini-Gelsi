@@ -97,6 +97,8 @@
                             <td colspan="2" align="right">
                                 <table style="font-weight: bold; width: 150px;">
                                     <tr>
+                                        <td>SubTotal S/.</td>
+                                        <td bgcolor="#D9D9D9" style="border:1px solid black;"><span id="subtotalcosto"></span></td>
                                         <td>Total S/.</td>
                                         <td bgcolor="#D9D9D9" style="border:1px solid black;"><span id="totalcosto"></span></td>
                                     </tr>
@@ -136,7 +138,9 @@
             AjaxPost("../frmConsultarVenta.aspx/ObtenerDetalle", JSON.stringify(request),
                 function (response) {
                     $("#seleccion").LoadingOverlay("hide");
+
                     if (response.estado) {
+
                         $("#ructienda").text(response.objeto.oTienda.RUC);
                         $("#tipodocumento").text(response.objeto.TipoDocumento);
                         $("#codigodocumento").text(response.objeto.Codigo);
@@ -156,24 +160,56 @@
 
                         
                         $("#tbVentas tbody").html("");
-                
-                        $.each(response.objeto.oListaDetalleVenta, function (i, row) {
-                            $("<tr>").append(
-                                $("<td>").text(row.Cantidad),
-                                $("<td>").text(row.NombreProducto),
-                                $("<td>").text(row.PrecioUnidad),
-                                $("<td>").text(row.ImporteTotal)
-                        
-                            ).appendTo("#tbVentas tbody");
 
+                        var total = 0
+                        var subtotal = 0
+                        var precioUnidad = 0
+                        var precioTotal = 0
+
+                        $.each(response.objeto.oListaDetalleVenta, function (i, row) {
+
+
+                            if ($("#tipodocumento").text() == "Factura B") {
+
+                                var precioUnidad = row.PrecioUnidad * 0.79
+                                total += row.PrecioUnidad
+
+                                $("<tr>").append(
+                                    $("<td>").text(row.Cantidad),
+                                    $("<td>").text(row.NombreProducto),
+                                    $("<td>").text(precioUnidad),
+                                    $("<td>").text(precioUnidadIva)
+
+                                ).appendTo("#tbVentas tbody");
+
+                            }
+                            if ($("#tipodocumento").text() == "Factura A")    {
+                                subtotal += row.PrecioUnidad * 0.21
+                                precioUnidad = row.PrecioUnidad * 0.79
+                                precioTotal = row.ImporteTotal * 0.79
+
+                                total += subtotal + precioTotal
+
+                                $("<tr>").append(
+                                    $("<td>").text(row.Cantidad),
+                                    $("<td>").text(row.NombreProducto),
+                                    $("<td>").text(precioUnidad.toString()),
+                                    $("<td>").text(precioTotal.toString()),
+                                ).appendTo("#tbVentas tbody");
+                            }
+                        
                         })
 
                         $("#importerecibido").text(response.objeto.ImporteRecibido);
                         $("#importecambio").text(response.objeto.ImporteCambio);//TotalCosto
-                        $("#totalcosto").text(response.objeto.TotalCosto);//TotalCosto
+                        $("#subtotalcosto").text(subtotal);//SubTotalCosto
+                        $("#totalcosto").text(total);//TotalCosto
                         
 
-                    } 
+                    }
+                    
+
+
                 },
                 function () {
                     $("#seleccion").LoadingOverlay("hide");

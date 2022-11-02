@@ -4,9 +4,8 @@ $(document).ready(function () {
 
 });
 
-
 function cargarDatos() {
-
+    
     if ($.fn.DataTable.isDataTable('#tbLibroDiario')) {
         $('#tbLibroDiario').DataTable().destroy();
     }
@@ -44,3 +43,8 @@ function cargarDatos() {
             $(".card-body").LoadingOverlay("show");
         })
 }
+
+$('#buscarFiltro').on('click', function () {
+    console.log('Aca');
+})
+

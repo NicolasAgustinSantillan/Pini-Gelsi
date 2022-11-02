@@ -113,8 +113,8 @@ C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\bin\Microsoft.CodeDom.Provid
 C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\bin\CapaDatos.pdb
 C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\bin\CapaModelo.pdb
 C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\obj\Debug\SistemaVentas.dll
-C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\obj\Debug\SistemaVentas.pdb
 C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\obj\Debug\SistemaVentas.csproj.AssemblyReference.cache
 C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\obj\Debug\SistemaVentas.csproj.CoreCompileInputs.cache
 C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\obj\Debug\SistemaVentas.csproj.CopyComplete
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\obj\Debug\SistemaVentas.dll
+C:\Pini-Gelsi\010_VENTAS_WEB_Proyecto\SistemaVentas\obj\Debug\SistemaVentas.pdb

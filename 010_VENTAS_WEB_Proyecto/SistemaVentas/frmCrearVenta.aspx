@@ -397,7 +397,6 @@
         </div>
       </div>
     </div>
-
-
     <script src="Controlador/frmCrearVenta/frmCrearVenta.js"></script>
+
 </asp:Content>
